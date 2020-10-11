@@ -1,0 +1,103 @@
+<script>
+  var context;
+
+	var inc = 1;
+
+  function init(bool)
+  {
+	  	context= mainCanvas.getContext('2d');
+	context.beginPath();
+    context.fillStyle="#0000ff";
+
+	  
+	  context.lineWidth = 1;
+	  context.strokeRect(mainCanvas.width/2, 0, 0, mainCanvas.height);
+
+	  context.strokeRect(0, mainCanvas.height/2, mainCanvas.width, 0);	
+	  
+
+	  if (bool ==1) inc++;
+	  else if (bool == 0) inc--;
+	  
+	  
+	  Recursion(0, inc, context, "#000000");
+	  
+  }
+  
+  
+  function Recursion(current, max, context, colors)
+  {
+	if (current >= max) return;
+	var color;
+	for (var x = 0; x<4; x++)
+	{
+		if (x==0 && colors == '#000000') color = '#ff0000';
+		else if (x==1 && colors == '#000000') color = '#00ff00';
+		else if (x==2 && colors == '#000000')   color = '#0000ff';
+		else if (x==3 && colors == '#000000')   color = '#ff00ff';
+		else color = colors;
+		DrawRecursion(current, max, context, color, x);
+	}
+	
+  }
+	
+function DrawRecursion(current, max, context, color, i)
+{
+	context.save();
+	
+	if (i == 0)
+	{
+		context.translate(mainCanvas.width/2, 0); 
+		context.scale(0.5,0.5);
+	}
+	else if (i==1)
+	{
+		context.translate(mainCanvas.width, mainCanvas.height/2); 
+		context.rotate(Math.PI/2);
+		context.scale(0.5,0.5);
+
+	}
+	else if (i == 2)
+	{
+		context.translate(mainCanvas.width/2, mainCanvas.height/2); 
+		context.scale(-0.5,0.5);
+	}
+	else if (i == 3)
+	{
+		context.translate(mainCanvas.width/2, mainCanvas.height/4); 
+		context.scale(-0.25,0.25);
+	}
+	
+	
+	LetterL(0, 0, mainCanvas.width, color, context, i);
+	Recursion(current + 1, max, context, color);
+	context.restore();
+}
+
+function LetterL(x, y, size, color, context, i)
+{
+	if (i==3)
+	{
+		context.clearRect(x, y-size, size*2, size*2);
+	}
+	context.fillStyle = color;
+	context.fillRect(x, y, size/2, size);
+	context.fillRect(x + size/2, y + size/2, size/2, size/2);
+	
+	context.fillStyle = '#ffffff';
+	context.fillRect(x+size/2, y, size/2, size/2);
+	
+}
+
+
+  
+  
+</script>
+
+<body onLoad="init(2);">
+	<canvas id ="mainCanvas" width="800" height="800" ></canvas>
+	<input type="button" onclick="init(1)" value="Increment Value" />
+	<input type="button" onclick="init(0)" value="Decrament Value" />
+</body>
+
+
