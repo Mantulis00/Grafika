@@ -1,7 +1,7 @@
 <script>
   var context;
 
-	var inc = 1;
+	var inc = 0;
 
   function init(bool)
   {
@@ -12,16 +12,29 @@
 	  
 	  context.lineWidth = 1;
 	  context.strokeRect(mainCanvas.width/2, 0, 0, mainCanvas.height);
-
 	  context.strokeRect(0, mainCanvas.height/2, mainCanvas.width, 0);	
 	  
 
 	  if (bool ==1) inc++;
 	  else if (bool == 0) inc--;
 	  
+	  if (inc ==0)initRect(context);
+	  
+	  document.getElementById("incval").innerHTML = inc;
 	  
 	  Recursion(0, inc, context, "#000000");
 	  
+  }
+  
+  function initRect(context)
+  {
+	context.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+	context.fillStyle="#0000ff";
+	context.fillRect(0, 0, mainCanvas.width, mainCanvas.height);
+
+	context.fillStyle="#ffffff";
+	context.fillRect(0, 0, mainCanvas.width/2, mainCanvas.height*4/5);
+	
   }
   
   
@@ -85,7 +98,7 @@ function LetterL(x, y, size, color, context, i)
 	context.fillRect(x + size/2, y + size/2, size/2, size/2);
 	
 	context.fillStyle = '#ffffff';
-	context.fillRect(x+size/2, y, size/2, size/2);
+	context.fillRect(x+size/3, y, size/3*2, size/5*4);
 	
 }
 
@@ -98,6 +111,7 @@ function LetterL(x, y, size, color, context, i)
 	<canvas id ="mainCanvas" width="800" height="800" ></canvas>
 	<input type="button" onclick="init(1)" value="Increment Value" />
 	<input type="button" onclick="init(0)" value="Decrament Value" />
+	 <span id="incval"></span></h1>
 </body>
 
 
